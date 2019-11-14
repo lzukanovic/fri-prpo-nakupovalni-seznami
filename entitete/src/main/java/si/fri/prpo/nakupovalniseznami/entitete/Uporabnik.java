@@ -8,7 +8,10 @@ import java.util.List;
 @Table(name = "uporabnik")
 @NamedQueries(value =
         {
-                @NamedQuery(name = "Uporabnik.getAll", query = "SELECT u FROM Uporabnik u")
+                @NamedQuery(name = "Uporabnik.getAll", query = "SELECT u FROM Uporabnik u"),
+                @NamedQuery(name = "Uporabnik.getPetra", query = "SELECT u FROM Uporabnik u WHERE u.ime='Petra'"),
+                @NamedQuery(name = "Uporabnik.getEmail", query = "SELECT u.email FROM Uporabnik u"),
+                @NamedQuery(name = "Uporabnik.getUporabniskoIme", query = "SELECT u.uporabniskoIme FROM Uporabnik u")
         })
 public class Uporabnik {
     @Id
@@ -24,7 +27,7 @@ public class Uporabnik {
 
     private String email;
 
-    // @JsonbTransient
+    @JsonbTransient
     @OneToMany(mappedBy = "uporabnik")
     private List<NakupovalniSeznam> nakupovalniSeznami;
 
@@ -66,5 +69,10 @@ public class Uporabnik {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return String.format( "("+this.id+") "+this.ime + " - " +this.email);
     }
 }

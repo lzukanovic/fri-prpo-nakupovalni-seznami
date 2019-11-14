@@ -8,7 +8,9 @@ import java.util.List;
 @Table(name = "oznaka")
 @NamedQueries(value =
         {
-                @NamedQuery(name = "Oznaka.getAll", query = "SELECT o FROM Oznaka o")
+                @NamedQuery(name = "Oznaka.getAll", query = "SELECT o FROM Oznaka o"),
+                @NamedQuery(name = "Oznaka.getOznakeInUse", query = "SELECT o FROM NakupovalniSeznam n JOIN n.oznake o WHERE n.id=o.id"),
+                @NamedQuery(name = "Oznaka.getNaslov", query = "SELECT o.naslov FROM Oznaka o")
         })
 
 public class Oznaka {
