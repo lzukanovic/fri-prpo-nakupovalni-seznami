@@ -71,6 +71,14 @@ public class Uporabnik {
         this.email = email;
     }
 
+    public List<NakupovalniSeznam> getNakupovalniSeznami() {
+        return nakupovalniSeznami;
+    }
+
+    public void setNakupovalniSeznami(List<NakupovalniSeznam> nakupovalniSeznami) {
+        this.nakupovalniSeznami = nakupovalniSeznami;
+    }
+
     @Override
     public String toString() {
         return String.format( "("+this.id+") "+this.ime + " - " +this.email);
