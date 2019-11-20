@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Logger;
@@ -37,22 +38,21 @@ public class JPAservlet extends HttpServlet {
         writer.append("<br/><br/>Uporabniki:<br/>");
         uporabnikiZrno.pridobiUporabnike().stream().forEach(u -> writer.append(u.toString() + "<br/><br/>"));
 
-        /*
+
         // dodam novega uporabnika
-        Uporabnik uDto = new Uporabnik();
+        UporabnikDto uDto = new UporabnikDto();
         uDto.setIme("Lan");
         uDto.setPriimek("Zukanovic");
         uDto.setEmail("LanZuk@gmail.com");
         uDto.setUporabniskoIme("lanz");
         uDto.setId(3);
 
-        Uporabnik up = uporabnikiZrno.dodajUporabnika(uDto);
-        writer.append("----<br/>"+up.toString()+"<br/><br/>");
-        writer.append("----<br/>"+uporabnikiZrno.pridobiUporabnika(3).toString()+"<br/>"+uporabnikiZrno.pridobiUporabnike().size()+"<br/>");
+        Uporabnik up = upravljanjeUporabnikovZrno.dodajUporabnika(uDto);
+        writer.append("<br/>Dodaj novega uporabnika: <br/>"+uporabnikiZrno.pridobiUporabnika(3).toString()+"<br/>");
 
         // izpis uporabnikov
-        writer.append("<br/><br/>Uporabniki:<br/>");
-        uporabnikiZrno.pridobiUporabnike().stream().forEach(u -> writer.append(u.toString() + "<br/><br/>"));
-        */
+        writer.append("<br/><br/>Uporabniki po dodajanju:<br/>");
+        uporabnikiZrno.pridobiUporabnike().forEach(u -> writer.append(u.toString()).append("<br/><br/>"));
+
     }
 }

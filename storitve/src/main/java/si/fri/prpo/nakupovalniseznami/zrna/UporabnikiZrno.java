@@ -5,7 +5,9 @@ import si.fri.prpo.nakupovalniseznami.entitete.Uporabnik;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -15,7 +17,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-@ApplicationScoped
+@ApplicationScoped // Naredi zrno le 1x
+//@RequestScoped // Naredi in unici zrno vsakic znova
 public class UporabnikiZrno {
     private Logger log = Logger.getLogger(UporabnikiZrno.class.getName());
 
@@ -67,7 +70,9 @@ public class UporabnikiZrno {
     @Transactional
     public Uporabnik dodajUporabnika(Uporabnik uporabnik) {
         if(uporabnik != null) {
+            //em.getTransaction().begin();
             em.persist(uporabnik);
+            //em.getTransaction().commit();
         }
 
         return uporabnik;
