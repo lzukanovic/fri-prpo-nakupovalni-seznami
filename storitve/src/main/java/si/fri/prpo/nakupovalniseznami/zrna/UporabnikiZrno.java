@@ -1,5 +1,6 @@
 package si.fri.prpo.nakupovalniseznami.zrna;
 
+import si.fri.prpo.nakupovalniseznami.anotacije.BeleziKlice;
 import si.fri.prpo.nakupovalniseznami.entitete.Uporabnik;
 
 import javax.annotation.PostConstruct;
@@ -62,6 +63,7 @@ public class UporabnikiZrno {
         return em.createQuery(query).getResultList();
     }
 
+    @BeleziKlice
     public Uporabnik pridobiUporabnika(int uporabnikId) {
         Uporabnik uporabnik = em.find(Uporabnik.class, uporabnikId);
         return uporabnik;
@@ -79,13 +81,14 @@ public class UporabnikiZrno {
     }
 
     @Transactional
-    public void posodobiUporabnika(int uporabnikId, Uporabnik uporabnik) {
+    public Uporabnik posodobiUporabnika(int uporabnikId, Uporabnik uporabnik) {
         Uporabnik u = em.find(Uporabnik.class, uporabnikId);
 
         if(u != null) {
             uporabnik.setId(u.getId());
             em.merge(uporabnik);
         }
+        return uporabnik;
     }
 
     @Transactional
