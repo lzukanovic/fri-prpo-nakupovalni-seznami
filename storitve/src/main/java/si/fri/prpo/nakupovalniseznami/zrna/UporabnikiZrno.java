@@ -1,5 +1,7 @@
 package si.fri.prpo.nakupovalniseznami.zrna;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.nakupovalniseznami.anotacije.BeleziKlice;
 import si.fri.prpo.nakupovalniseznami.entitete.Uporabnik;
 
@@ -49,8 +51,15 @@ public class UporabnikiZrno {
 
         //List<Uporabnik> uporabniki = em.createNamedQuery("Uporabnik.getAll").getResultList();
         List<Uporabnik> uporabniki = em.createNamedQuery("Uporabnik.getAll", Uporabnik.class).getResultList();
-
         return uporabniki;
+    }
+
+    public List<Uporabnik> pridobiUporabnike(QueryParameters query) {
+        return JPAUtils.queryEntities(em, Uporabnik.class, query);
+    }
+
+    public Long pridobiUporabnikeCount(QueryParameters query) {
+        return JPAUtils.queryEntitiesCount(em, Uporabnik.class, query);
     }
 
     public List<Uporabnik> pridobiUporabnikeCriteriaAPI() {
@@ -92,12 +101,12 @@ public class UporabnikiZrno {
     }
 
     @Transactional
-    public Integer odstraniUporabnika(int uporabnikId) {
+    public Boolean odstraniUporabnika(int uporabnikId) {
         Uporabnik uporabnik = pridobiUporabnika(uporabnikId);
 
         if(uporabnik != null)
             em.remove(uporabnik);
 
-        return uporabnikId;
+        return true;
     }
 }

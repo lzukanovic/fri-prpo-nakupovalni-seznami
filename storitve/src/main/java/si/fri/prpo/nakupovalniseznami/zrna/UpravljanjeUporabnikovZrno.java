@@ -2,6 +2,7 @@ package si.fri.prpo.nakupovalniseznami.zrna;
 
 import si.fri.prpo.nakupovalniseznami.dtos.UporabnikDto;
 import si.fri.prpo.nakupovalniseznami.entitete.Uporabnik;
+import si.fri.prpo.nakupovalniseznami.izjeme.NeveljavenUporabnikIdIzjema;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -31,8 +32,9 @@ public class UpravljanjeUporabnikovZrno {
         Integer uporabnikId = uporabnikDto.getId();
 
         if (uporabnikId == null || uporabnikiZrno.pridobiUporabnika(uporabnikId) != null) {
-            log.info("Novega uporabnika ni mogoce ustvariti. Neveljaven ID.");
-            return null;
+            String msg = "Novega uporabnika ni mogoce ustvariti. Neveljaven ID.";
+            log.info(msg);
+            throw new NeveljavenUporabnikIdIzjema(msg);
         }
 
         Uporabnik uporabnik = new Uporabnik();
