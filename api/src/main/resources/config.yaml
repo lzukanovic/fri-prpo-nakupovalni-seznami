@@ -9,3 +9,10 @@ kumuluzee:
       username: postgres
       password: postgres
       max-pool-size: 20
+  health:
+    checks:
+      disk-space-health-check:
+        threshold: 100000000
+      data-source-health-check:
+        type: liveness
+        jndi-name: jdbc/NakupovalniSeznamiDS

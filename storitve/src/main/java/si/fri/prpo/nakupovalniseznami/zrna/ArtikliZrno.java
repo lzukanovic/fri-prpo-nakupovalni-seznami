@@ -1,5 +1,6 @@
 package si.fri.prpo.nakupovalniseznami.zrna;
 
+import si.fri.prpo.nakupovalniseznami.dtos.ArtikelDto;
 import si.fri.prpo.nakupovalniseznami.entitete.Artikel;
 import si.fri.prpo.nakupovalniseznami.entitete.Uporabnik;
 
@@ -9,19 +10,31 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.GenericType;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class ArtikliZrno {
 
     private Logger log = Logger.getLogger(ArtikliZrno.class.getName());
 
+    private Client httpClient;
+    private String baseUrl;
+
     @PostConstruct
     private void init() {
         log.info("Inicializacija zrna " + ArtikliZrno.class.getSimpleName());
 
         // inicializacija virov
+        httpClient = ClientBuilder.newClient();
+        baseUrl = "http://localhost:8081/v1";
     }
 
     @PreDestroy
@@ -39,6 +52,20 @@ public class ArtikliZrno {
         //List<Artikel> artikli = em.createNamedQuery("Artikel.getAll").getResultList();
         List<Artikel> artikli = em.createNamedQuery("Artikel.getAll", Artikel.class).getResultList();
 
+        return artikli;
+    }
+
+    public Map<Artikel, Integer> pridobiPriporoceneArtikle() {
+
+        Map<Artikel, Integer> artikli =
+                httpClient
+                    .target(baseUrl+"/priporocila")
+                    .request().get(new GenericType<Map<Artikel, Integer>>() {})
+                .entrySet()
+                .stream()
+                .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
         return artikli;
     }
 
