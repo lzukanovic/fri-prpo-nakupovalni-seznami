@@ -12,7 +12,9 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -67,6 +69,16 @@ public class ArtikliZrno {
                 .collect(Collectors.toMap(
                         Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
         return artikli;
+    }
+
+    public void beleziPriporocenArtikel(ArtikelDto artikelDto) {
+        Artikel artikel = new Artikel();
+        artikel.setNaziv(artikelDto.getNaziv());
+
+        httpClient
+                .target(baseUrl+"/priporocila")
+                .request().post(Entity.entity(artikelDto, MediaType.APPLICATION_JSON));
+
     }
 
     public Artikel pridobiArtikel(int artikelId) {

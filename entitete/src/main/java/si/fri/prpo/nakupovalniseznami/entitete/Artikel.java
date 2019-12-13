@@ -60,4 +60,9 @@ public class Artikel {
     public void setNakupovalniSeznam(NakupovalniSeznam nakupovalniSeznam) {
         this.nakupovalniSeznam = nakupovalniSeznam;
     }
+
+    @Override
+    public String toString() {
+        return String.format(this.getNaziv());
+    }
 }
