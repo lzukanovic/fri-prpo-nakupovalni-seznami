@@ -15,6 +15,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -49,14 +50,7 @@ public class ArtikliZrno {
     @PersistenceContext(unitName = "nakupovalni-seznami-jpa")
     private EntityManager em;
 
-    public List<Artikel> pridobiArtikle() {
-
-        //List<Artikel> artikli = em.createNamedQuery("Artikel.getAll").getResultList();
-        List<Artikel> artikli = em.createNamedQuery("Artikel.getAll", Artikel.class).getResultList();
-
-        return artikli;
-    }
-
+    // API calls - Start
     public Map<Artikel, Integer> pridobiPriporoceneArtikle() {
 
         Map<Artikel, Integer> artikli =
@@ -79,6 +73,26 @@ public class ArtikliZrno {
                 .target(baseUrl+"/priporocila")
                 .request().post(Entity.entity(artikelDto, MediaType.APPLICATION_JSON));
 
+    }
+
+    public Response spellCheck(String check) {
+        Response resp = httpClient
+                .target("https://montanaflynn-spellcheck.p.rapidapi.com/check/?text="+check)
+                .request(MediaType.APPLICATION_JSON)
+                .header("x-rapidapi-host", "montanaflynn-spellcheck.p.rapidapi.com")
+                .header("x-rapidapi-key", "7d65c716c6mshc0f836f60d08efep1b4219jsn0cc7a3c60eba")
+                .get();
+        return resp;
+    }
+    // API calls - End
+
+
+
+    public List<Artikel> pridobiArtikle() {
+        //List<Artikel> artikli = em.createNamedQuery("Artikel.getAll").getResultList();
+        List<Artikel> artikli = em.createNamedQuery("Artikel.getAll", Artikel.class).getResultList();
+
+        return artikli;
     }
 
     public Artikel pridobiArtikel(int artikelId) {

@@ -25,8 +25,8 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 
 
-@WebServlet("/servletList")
-public class ListServlet extends HttpServlet {
+@WebServlet("/servletSpell")
+public class SpellServlet extends HttpServlet {
 
     @Inject
     private ArtikliZrno artikliZrno;
@@ -36,35 +36,19 @@ public class ListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        resp.setContentType("text/html; charset=UTF-8");
+        resp.setContentType("application/json; charset=UTF-8\"");
         resp.setCharacterEncoding("UTF-8");
-
         PrintWriter writer = resp.getWriter();
 
-        Map<Artikel, Integer> ar = artikliZrno.pridobiPriporoceneArtikle();
-        for (Map.Entry<Artikel, Integer> entry : ar.entrySet())
-            writer.append(entry.getKey()+" ("+entry.getValue()+")").append("<br/>");
+        String naziv = req.getParameter("naziv");
+        Response data = artikliZrno.spellCheck(naziv);
+        //System.out.println(String.format("Status: %d, JSON Payload: %s", json.getStatus(), json.readEntity(String.class)));
+        //System.out.println(json.readEntity(String.class));
+        //writer.print(json);
+        //writer.flush();
+        req.setAttribute("data", data);
+        req.getRequestDispatcher("shopping.jsp").forward(req, resp);
+
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String naziv = request.getParameter("artikel");
-
-        Response resp = artikliZrno.spellCheck(naziv);
-
-        PrintWriter writer = response.getWriter();
-        //System.out.println(resp.readEntity(String.class));
-        writer.append("<br/>Test<br/>");
-
-
-        ArtikelDto artikelDto = new ArtikelDto();
-        artikelDto.setNaziv(naziv);
-        artikliZrno.beleziPriporocenArtikel(artikelDto);
-
-        Artikel art = new Artikel();
-        art.setNaziv(naziv);
-        artikliZrno.dodajArtikel(art);
-
-        response.sendRedirect("shopping.jsp");
-    }
 }

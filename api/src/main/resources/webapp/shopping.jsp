@@ -8,6 +8,7 @@
 <h2>Seznam</h2>
 <hr>
     <div id="inputs" style="margin-right:10px;float:left;border:1px solid gray;">
+        <p id="suggestion">${data}</p>
         <form action="${pageContext.request.contextPath}/servletList" method="post">
             <label for="artikel">
                 <input type="text" id="artikel" name="artikel"/>
@@ -23,5 +24,22 @@
         <jsp:include page="${pageContext.request.contextPath}/servletList"/>
     </div>
 
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+        var vnos;
+        var submit = document.getElementById("submit");
+        submit.addEventListener("click", function() {
+            var input = document.getElementById("artikel");
+            vnos = input.value;
+
+            $.getJSON('/servletSpell', {naziv: vnos}, function(data) {
+                console.log("Dobljeno:");
+                console.log(data);
+            });
+
+        });
+
+
+    </script>
 </body>
 </html>
