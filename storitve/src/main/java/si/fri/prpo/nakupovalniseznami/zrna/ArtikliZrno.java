@@ -2,7 +2,6 @@ package si.fri.prpo.nakupovalniseznami.zrna;
 
 import si.fri.prpo.nakupovalniseznami.dtos.ArtikelDto;
 import si.fri.prpo.nakupovalniseznami.entitete.Artikel;
-import si.fri.prpo.nakupovalniseznami.entitete.Uporabnik;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -75,23 +74,23 @@ public class ArtikliZrno {
 
     }
 
-    public Response spellCheck(String check) {
+    /*
+    public void spellCheck(String check) {
         Response resp = httpClient
                 .target("https://montanaflynn-spellcheck.p.rapidapi.com/check/?text="+check)
                 .request(MediaType.APPLICATION_JSON)
                 .header("x-rapidapi-host", "montanaflynn-spellcheck.p.rapidapi.com")
                 .header("x-rapidapi-key", "7d65c716c6mshc0f836f60d08efep1b4219jsn0cc7a3c60eba")
                 .get();
-        return resp;
+
+        String predlog = resp.readEntity(String.class);
     }
+    */
     // API calls - End
 
 
-
     public List<Artikel> pridobiArtikle() {
-        //List<Artikel> artikli = em.createNamedQuery("Artikel.getAll").getResultList();
         List<Artikel> artikli = em.createNamedQuery("Artikel.getAll", Artikel.class).getResultList();
-
         return artikli;
     }
 
@@ -105,14 +104,12 @@ public class ArtikliZrno {
         if(artikel != null) {
             em.persist(artikel);
         }
-
         return artikel;
     }
 
     @Transactional
     public void posodobiArtikel(int arikelId, Artikel artikel) {
         Artikel a = em.find(Artikel.class, arikelId);
-
         if(a != null) {
             artikel.setId(a.getId());
             em.merge(artikel);
@@ -122,7 +119,6 @@ public class ArtikliZrno {
     @Transactional
     public Integer odstraniArtikel(int artikelId) {
         Artikel artikel = pridobiArtikel(artikelId);
-
         if(artikel != null)
             em.remove(artikel);
 

@@ -12,6 +12,6 @@
 <a href="list.jsp">List customers</a>
 <br/>
 <br/>
-<a href="shopping.jsp">New shopping list</a>
+<a href="shopping.jsp">Shopping list</a>
 </body>
 </html>

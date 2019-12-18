@@ -48,15 +48,26 @@ public class JPAservlet extends HttpServlet {
         String email = request.getParameter("email");
         String username = request.getParameter("username");
 
-        UporabnikDto uporabnikDto = new UporabnikDto();
-        uporabnikDto.setId(Integer.parseInt(id));
-        uporabnikDto.setIme(firstName);
-        uporabnikDto.setPriimek(lastName);
-        uporabnikDto.setEmail(email);
-        uporabnikDto.setUporabniskoIme(username);
+        PrintWriter writer = response.getWriter();
 
-        Uporabnik up = upravljanjeUporabnikovZrno.dodajUporabnika(uporabnikDto);
+        boolean preveri = upravljanjeUporabnikovZrno.emailCheck(email);
 
-        response.sendRedirect("input.jsp");
+        if(preveri) {
+
+            UporabnikDto uporabnikDto = new UporabnikDto();
+            uporabnikDto.setId(Integer.parseInt(id));
+            uporabnikDto.setIme(firstName);
+            uporabnikDto.setPriimek(lastName);
+            uporabnikDto.setEmail(email);
+            uporabnikDto.setUporabniskoIme(username);
+
+            Uporabnik up = upravljanjeUporabnikovZrno.dodajUporabnika(uporabnikDto);
+
+            response.sendRedirect("input.jsp");
+        } else {
+            writer.write("<h1>Niste vnesli pravilnega emaila!</h1><h3>Pojdite nazaj in poskusite znova.</h3>");
+            writer.append("</br>")
+                    .append("<button onclick=\"location.href='input.jsp'\" type=\"button\">Nazaj</button>");
+        }
     }
 }
