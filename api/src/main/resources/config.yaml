@@ -16,3 +16,8 @@ kumuluzee:
       data-source-health-check:
         type: liveness
         jndi-name: jdbc/NakupovalniSeznamiDS
+  kumuluzee:
+    cors-filter:
+      servlet:
+        allow-generic-http-requests: true
+        allow-origin: "*"

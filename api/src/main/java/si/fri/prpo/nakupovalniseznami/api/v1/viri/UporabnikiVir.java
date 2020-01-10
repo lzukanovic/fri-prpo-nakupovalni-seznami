@@ -1,5 +1,6 @@
 package si.fri.prpo.nakupovalniseznami.api.v1.viri;
 
+import com.kumuluz.ee.cors.annotations.CrossOrigin;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -47,6 +48,7 @@ public class UporabnikiVir {
                                 headers = {@Header(name = "X-Total-Count", description = "Stevilo vrnjenih uporabnikov")}
                 )})
     @GET
+    @CrossOrigin
     public Response pridobiUporabnike() {
         //return Response.ok(uporabnikiZrno.pridobiUporabnike()).build();
 
@@ -71,6 +73,7 @@ public class UporabnikiVir {
                 )})
     @GET
     @Path("{id}")
+    @CrossOrigin
     public Response pridobiUporabnika(@Parameter(
                                         description = "Identifikator uporabnika za prikaz.",
                                         required = true) @PathParam("id") Integer id)
@@ -95,6 +98,7 @@ public class UporabnikiVir {
                     @ApiResponse(responseCode = "405", description = "Validacijska napaka.")
             })
     @POST
+    @CrossOrigin
     public Response dodajUporabnika(@RequestBody(
                                         description = "DTO objekt za dodajanje uporabnikov.",
                                         required = true,
@@ -118,6 +122,7 @@ public class UporabnikiVir {
             })
     @PUT
     @Path("{id}")
+    @CrossOrigin
     public Response posodobiUporabnika(@Parameter(
                                         description = "Identifikator uporabnika za posodabljanje.",
                                         required = true) @PathParam("id") Integer id,
@@ -143,6 +148,7 @@ public class UporabnikiVir {
             })
     @DELETE
     @Path("{id}")
+    @CrossOrigin
     public Response odstraniUporabnika(@Parameter(
                                         description = "Identifikator uporabnika za brisanje.",
                                         required = true) @PathParam("id") Integer id)
