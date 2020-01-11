@@ -26,6 +26,7 @@ import javax.ws.rs.core.UriInfo;
 @Path("uporabniki")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@CrossOrigin(supportedMethods = "GET, POST, HEAD, OPTIONS, PUT, DELETE")
 public class UporabnikiVir {
 
     @Context
@@ -48,7 +49,6 @@ public class UporabnikiVir {
                                 headers = {@Header(name = "X-Total-Count", description = "Stevilo vrnjenih uporabnikov")}
                 )})
     @GET
-    @CrossOrigin
     public Response pridobiUporabnike() {
         //return Response.ok(uporabnikiZrno.pridobiUporabnike()).build();
 
@@ -73,7 +73,6 @@ public class UporabnikiVir {
                 )})
     @GET
     @Path("{id}")
-    @CrossOrigin
     public Response pridobiUporabnika(@Parameter(
                                         description = "Identifikator uporabnika za prikaz.",
                                         required = true) @PathParam("id") Integer id)
@@ -98,7 +97,6 @@ public class UporabnikiVir {
                     @ApiResponse(responseCode = "405", description = "Validacijska napaka.")
             })
     @POST
-    @CrossOrigin
     public Response dodajUporabnika(@RequestBody(
                                         description = "DTO objekt za dodajanje uporabnikov.",
                                         required = true,
@@ -122,7 +120,6 @@ public class UporabnikiVir {
             })
     @PUT
     @Path("{id}")
-    @CrossOrigin
     public Response posodobiUporabnika(@Parameter(
                                         description = "Identifikator uporabnika za posodabljanje.",
                                         required = true) @PathParam("id") Integer id,
@@ -148,7 +145,6 @@ public class UporabnikiVir {
             })
     @DELETE
     @Path("{id}")
-    @CrossOrigin
     public Response odstraniUporabnika(@Parameter(
                                         description = "Identifikator uporabnika za brisanje.",
                                         required = true) @PathParam("id") Integer id)

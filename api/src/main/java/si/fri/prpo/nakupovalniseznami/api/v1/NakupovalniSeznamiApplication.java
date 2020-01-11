@@ -1,6 +1,6 @@
 package si.fri.prpo.nakupovalniseznami.api.v1;
 
-
+import com.kumuluz.ee.cors.annotations.CrossOrigin;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -12,6 +12,7 @@ import javax.ws.rs.core.Application;
 
 @OpenAPIDefinition(info = @Info(title = "NakupovanjeAPI", version = "v1.0.0", contact = @Contact(), license = @License(name = "something")), servers = @Server(url = "http://localhost:8080"))
 @ApplicationPath("v1")
+@CrossOrigin(supportedMethods = "GET, POST, HEAD, OPTIONS, PUT, DELETE")
 public class NakupovalniSeznamiApplication extends Application {
 }
 
