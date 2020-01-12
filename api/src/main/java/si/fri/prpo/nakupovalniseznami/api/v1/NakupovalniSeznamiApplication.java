@@ -12,7 +12,7 @@ import javax.ws.rs.core.Application;
 
 @OpenAPIDefinition(info = @Info(title = "NakupovanjeAPI", version = "v1.0.0", contact = @Contact(), license = @License(name = "something")), servers = @Server(url = "http://localhost:8080"))
 @ApplicationPath("v1")
-@CrossOrigin(supportedMethods = "GET, POST, HEAD, OPTIONS, PUT, DELETE")
+@CrossOrigin(supportedMethods = "GET, POST, PUT, DELETE")
 public class NakupovalniSeznamiApplication extends Application {
 }
 

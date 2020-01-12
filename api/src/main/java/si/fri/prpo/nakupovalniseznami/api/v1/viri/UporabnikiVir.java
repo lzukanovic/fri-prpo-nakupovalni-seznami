@@ -26,7 +26,7 @@ import javax.ws.rs.core.UriInfo;
 @Path("uporabniki")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@CrossOrigin(supportedMethods = "GET, POST, HEAD, OPTIONS, PUT, DELETE")
+@CrossOrigin(supportedMethods = "GET, POST, PUT, DELETE")
 public class UporabnikiVir {
 
     @Context
